@@ -15,19 +15,19 @@ const initdb = async () =>
 // export a function that accepts user content and adds it to the database
 export const putDb = async (content) => {
   // confirm putDb has been called
-  console.log('POST to the database');
+  console.log('PUT to the database');
 
   // creating a connection to the db and the version we will be using (1 in this case)
-  const contactDb = await openDB('jate', 1);
+  const jateDb = await openDB('jate', 1);
 
   // create a transaction and the ability to readwrite privilege to the JATE db
-  const tx = contactDb.transaction('jate', 'readwrite');
+  const tx = jateDb.transaction('jate', 'readwrite');
 
   // open the object store for JATE
   const store = tx.objectStore('jate');
 
   // utilize the add method on the store constant and pass in the content to the db
-  const request = store.add({ value: content });
+  const request = store.put({ jate: content });
 
   // confirm that the request was saved to the db.
   const result = await request;
@@ -42,10 +42,10 @@ export const getDb = async () => {
   console.log('GET to the database');
   
   // creating a connection to the db and the version we will be using (1 in this case)
-  const contactDb = await openDB('jate', 1);
+  const jateDb = await openDB('jate', 1);
 
   // create a transaction and the ability to readonly privilege to the JATE db
-  const tx = contactDb.transaction('jate', 'readonly');
+  const tx = jateDb.transaction('jate', 'readonly');
 
   // open the object store for JATE
   const store = tx.objectStore('jate');
@@ -58,8 +58,8 @@ export const getDb = async () => {
 
   // Get confirmation of the request and return the result
   const result = await request;
-  console.log('result.value', result);
-  return result;
+  console.log(result);
+  // return result.value;
 }
 
 
