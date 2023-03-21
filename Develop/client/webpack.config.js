@@ -2,9 +2,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { InjectManifest } = require('workbox-webpack-plugin');
-const { GenerateSW } = require('workbox-webpack-plugin');
 
-// TODO: Add and configure workbox plugins for a service worker and manifest file.
+
 module.exports = () => {
   return {
     mode: 'development',
@@ -12,9 +11,9 @@ module.exports = () => {
     entry: {
       main: './src/js/index.js',
       install: './src/js/install.js',
-      // database: './src/js/database.js',
-      // editor: './src/js/editor.js',
-      // header: './src/js/header.js',
+      database: './src/js/database.js',
+      editor: './src/js/editor.js',
+      header: './src/js/header.js',
     },
     // Output for our bundles
     output: {
@@ -31,11 +30,7 @@ module.exports = () => {
       // Injects our custom service worker
       new InjectManifest({
         swSrc: './src-sw.js',
-        swDest: './src-sw.js',
-      }),
-
-      new GenerateSW({
-        swDest: './service-worker.js',
+        swDest: 'src-sw.js',
       }),
 
       // Creates a manifest.json file.
@@ -47,8 +42,8 @@ module.exports = () => {
         description: 'Text editor utilizing PWA conventions',
         background_color: '#225ca3',
         theme_color: '#225ca3',
-        start_url: './',
-        publicPath: './',
+        start_url: '/',
+        publicPath: '/',
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
@@ -58,7 +53,6 @@ module.exports = () => {
         ],
       }),
     ],
-    // TODO: Add CSS loaders and babel to webpack.
     module: {
       // CSS loaders
       rules: [
